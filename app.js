@@ -7,6 +7,7 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const tasksRouter = require('./routes/tasks');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/public', express.static(__dirname + 'public'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/tasks', tasksRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
