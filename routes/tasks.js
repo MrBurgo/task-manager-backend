@@ -1,13 +1,26 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  knex('tasks')
+    .select(['id', 'title', 'body'])
+    .then((result) => {
+        res.json(result);
+    });
 });
 
-router.post('/', function(req, res, next) {
-    console.log(req.body);
+router.post('/new-task', function(req, res, next) {
+    const { title, body, user_id } = req.body;
+    knex('tasks')
+        .insert({
+            title,
+            body,
+            user_id
+        })
+        .returning(['id', 'title', 'body'])
+        .then((result) => {
+            res.json(result[0]);
+        });
 });
 
 module.exports = router;
